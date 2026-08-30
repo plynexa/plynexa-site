@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertTriangle } from 'lucide-react';
 
 export default function LeadForm() {
   const [formData, setFormData] = useState({
@@ -11,15 +11,53 @@ export default function LeadForm() {
     servico: 'Experiência Inteligente',
     mensagem: ''
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ nome: '', email: '', whatsapp: '', empresa: '', servico: 'Experiência Inteligente', mensagem: '' });
-    }, 1500);
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("Configurações do Supabase não encontradas nas variáveis de ambiente da Vercel.");
+      setStatus('error');
+      return;
+    }
+
+    try {
+      // Faz o envio direto para a API Rest pública do seu Supabase
+      const response = await fetch(`${supabaseUrl}/rest/v1/agency_leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          business_name: formData.empresa,
+          contact_name: formData.nome,
+          email: formData.email,
+          phone: formData.whatsapp,
+          service_interest: formData.servico,
+          message: formData.mensagem
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ nome: '', email: '', whatsapp: '', empresa: '', servico: 'Experiência Inteligente', message: '' });
+      } else {
+        const errorText = await response.text();
+        console.error("Erro do Supabase:", errorText);
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      setStatus('error');
+    }
   };
 
   return (
@@ -40,6 +78,13 @@ export default function LeadForm() {
             <h4 className="text-xl font-extrabold text-white mb-1">Agendar Diagnóstico de IA Gratuito</h4>
             <p className="text-xs text-mutedGray">Identifique os gargalos de atendimento do seu negócio em 15 minutos.</p>
           </div>
+
+          {status === 'error' && (
+            <div className="p-4 bg-red-950/40 border border-red-500/30 text-red-200 rounded-xl text-xs flex gap-2 items-center">
+              <AlertTriangle size={16} className="shrink-0 text-red-400" />
+              <span>Ocorreu um erro ao enviar seus dados para o banco. Verifique suas variáveis de ambiente na Vercel.</span>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
@@ -97,8 +142,7 @@ export default function LeadForm() {
               value={formData.servico}
               onChange={e => setFormData({...formData, servico: e.target.value})}
               className="w-full bg-background border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primaryGreen transition-colors appearance-none"
-            >
-              <option value="Site Essencial">Site Essencial (Apenas Site Institucional)</option>
+            >\n              <option value="Site Essencial">Site Essencial (Apenas Site Institucional)</option>
               <option value="Site de Conversão">Site de Conversão (Landing Page + Automações)</option>
               <option value="Experiência Inteligente">Experiência Inteligente (Site + Agente de IA e WhatsApp)</option>
             </select>
