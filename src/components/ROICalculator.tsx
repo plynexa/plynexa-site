@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Landmark, TrendingUp, Hourglass, ShieldAlert } from 'lucide-react';
 
