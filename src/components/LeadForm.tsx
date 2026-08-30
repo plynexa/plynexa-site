@@ -48,7 +48,14 @@ export default function LeadForm() {
 
       if (response.ok) {
         setStatus('success');
-        setFormData({ nome: '', email: '', whatsapp: '', empresa: '', servico: 'Experiência Inteligente', message: '' });
+        setFormData({ 
+          nome: '', 
+          email: '', 
+          whatsapp: '', 
+          empresa: '', 
+          servico: 'Experiência Inteligente', 
+          mensagem: '' 
+        });
       } else {
         const errorText = await response.text();
         console.error("Erro do Supabase:", errorText);
@@ -76,7 +83,7 @@ export default function LeadForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <h4 className="text-xl font-extrabold text-white mb-1">Agendar Diagnóstico de IA Gratuito</h4>
-            <p className="text-xs text-mutedGray">Identifique os gargalos de atendimento do seu negócio em 15 minutos.</p>
+            <p className="text-xs text-mutedGray">Identifique os gargalos de atendimento do seu negócio in 15 minutos.</p>
           </div>
 
           {status === 'error' && (
@@ -142,7 +149,8 @@ export default function LeadForm() {
               value={formData.servico}
               onChange={e => setFormData({...formData, servico: e.target.value})}
               className="w-full bg-background border border-borderGray rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primaryGreen transition-colors appearance-none"
-            >\n              <option value="Site Essencial">Site Essencial (Apenas Site Institucional)</option>
+            >
+              <option value="Site Essencial">Site Essencial (Apenas Site Institucional)</option>
               <option value="Site de Conversão">Site de Conversão (Landing Page + Automações)</option>
               <option value="Experiência Inteligente">Experiência Inteligente (Site + Agente de IA e WhatsApp)</option>
             </select>
