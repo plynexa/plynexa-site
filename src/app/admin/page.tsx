@@ -47,8 +47,8 @@ export default function AdminPage() {
     status: 'HUMAN_REVIEW'
   });
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
   // Verifica se já estava autenticado na sessão atual
   useEffect(() => {
