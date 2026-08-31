@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   Trash2, 
   Edit, 
-  CheckCircle2, 
   X, 
   Lock, 
   RefreshCw, 
@@ -13,7 +12,6 @@ import {
   Calendar,
   Building,
   User,
-  MessageSquare,
   AlertTriangle
 } from 'lucide-react';
 
@@ -109,8 +107,9 @@ export default function AdminPage() {
         const errText = await response.text();
         setError(`Erro ao buscar dados: ${response.status} - ${errText}`);
       }
-    } catch (err: any) {
-      setError(`Erro na requisição: ${err?.message || err}`);
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setError(`Erro na requisição: ${errorMsg}`);
     } finally {
       setLoading(false);
     }
@@ -132,7 +131,6 @@ export default function AdminPage() {
       });
 
       if (response.ok) {
-        // Remove da lista localmente
         setLeads(leads.filter(lead => lead.place_id !== placeId));
       } else {
         alert('Erro ao excluir no Supabase. Verifique se as permissões de DELETE estão liberadas.');
@@ -179,10 +177,9 @@ export default function AdminPage() {
       });
 
       if (response.ok) {
-        // Atualiza a lista localmente
         setLeads(leads.map(lead => 
           lead.place_id === editingLead.place_id 
-            ? { ...lead, ...editForm } 
+            ? ({ ...lead, ...editForm } as Lead)
             : lead
         ));
         setEditingLead(null);
@@ -195,7 +192,6 @@ export default function AdminPage() {
     }
   };
 
-  // Retorna uma mensagem formatada para abrir no WhatsApp
   const getWhatsAppLink = (lead: Lead) => {
     if (!lead.phone) return '#';
     const cleanPhone = lead.phone.replace(/\D/g, '');
@@ -206,15 +202,13 @@ export default function AdminPage() {
     return `https://wa.me/${phoneWithDdi}?text=${encodeURIComponent(message)}`;
   };
 
-  // Se NÃO estiver autenticado, exibe a tela de login com o estilo do site
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-6 selection:bg-primaryGreen selection:text-background">
+      <div className="min-h-screen bg-background flex items-center justify-center px-6 selection:bg-primaryGreen selection:text-background relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[600px] bg-gradient-to-b from-primaryGreen/5 to-transparent pointer-events-none z-0"></div>
         
         <div className="glass-card p-8 rounded-2xl border border-borderGray glow-green max-w-md w-full relative z-10 text-center space-y-6">
           <div className="flex justify-center">
-            {/* Hexagon Logo Icon */}
             <svg className="w-12 h-12" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
               <polygon points="250,50 430,150 430,350 250,450 70,350 70,150" fill="none" stroke="#39FF14" strokeWidth="24" strokeLinejoin="round" />
               <path d="M 150,210 L 250,260 L 350,210" stroke="#FFFFFF" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -260,12 +254,10 @@ export default function AdminPage() {
     );
   }
 
-  // Tela Administrativa Principal
   return (
     <div className="min-h-screen bg-background relative selection:bg-primaryGreen selection:text-background text-white font-sans">
       <div className="absolute top-0 left-0 right-0 h-[400px] bg-gradient-to-b from-primaryGreen/5 to-transparent pointer-events-none z-0"></div>
 
-      {/* Header Simplificado */}
       <header className="relative border-b border-borderGray bg-cardBg/35 backdrop-blur-md z-10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -295,10 +287,7 @@ export default function AdminPage() {
         </div>
       </header>
 
-      {/* Conteúdo Principal */}
       <main className="relative max-w-7xl mx-auto px-6 py-10 z-10 space-y-8">
-        
-        {/* Erro de Configuração ou Requisição */}
         {error && (
           <div className="p-4 bg-red-950/40 border border-red-500/30 text-red-200 rounded-xl text-sm flex gap-3 items-center">
             <AlertTriangle size={20} className="shrink-0 text-red-400" />
@@ -309,7 +298,6 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* Quadro Geral de Leads */}
         <div className="glass-card rounded-2xl border border-borderGray overflow-hidden">
           <div className="px-6 py-5 border-b border-borderGray bg-cardBg/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -348,7 +336,6 @@ export default function AdminPage() {
                 <tbody className="divide-y divide-borderGray/40 text-sm">
                   {leads.map((lead) => (
                     <tr key={lead.place_id} className="hover:bg-white/[0.02] transition-colors">
-                      {/* Empresa e Contato */}
                       <td className="py-4 px-6">
                         <div className="font-bold text-white flex items-center gap-1.5">
                           <Building size={14} className="text-primaryGreen" />
@@ -360,7 +347,6 @@ export default function AdminPage() {
                         </div>
                       </td>
                       
-                      {/* Canais de Contato */}
                       <td className="py-4 px-6 space-y-1">
                         {lead.phone && (
                           <div className="text-xs text-white flex items-center gap-1.5">
@@ -376,7 +362,6 @@ export default function AdminPage() {
                         )}
                       </td>
 
-                      {/* Serviço Desejado */}
                       <td className="py-4 px-6">
                         <div className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-xs text-white rounded-lg px-2.5 py-1">
                           <Briefcase size={12} className="text-primaryGreen" />
@@ -388,14 +373,12 @@ export default function AdminPage() {
                         </div>
                       </td>
 
-                      {/* Mensagem */}
                       <td className="py-4 px-6 max-w-xs">
                         <p className="text-xs text-mutedGray line-clamp-2" title={lead.message || ''}>
                           {lead.message || <span className="italic text-mutedGray/50">Sem mensagem...</span>}
                         </p>
                       </td>
 
-                      {/* Status */}
                       <td className="py-4 px-6">
                         <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${
                           lead.status === 'CONTACTED' 
@@ -408,7 +391,6 @@ export default function AdminPage() {
                         </span>
                       </td>
 
-                      {/* Ações */}
                       <td className="py-4 px-6 text-right">
                         <div className="flex items-center justify-end gap-2">
                           {lead.phone && (
@@ -417,7 +399,6 @@ export default function AdminPage() {
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={async () => {
-                                // Auto-marca como contatado ao abrir WhatsApp
                                 if (lead.status === 'HUMAN_REVIEW') {
                                   await fetch(`${supabaseUrl}/rest/v1/agency_leads?place_id=eq.${encodeURIComponent(lead.place_id)}`, {
                                     method: 'PATCH',
@@ -462,7 +443,6 @@ export default function AdminPage() {
         </div>
       </main>
 
-      {/* Modal / Caixa de Edição de Lead */}
       {editingLead && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center p-6 z-50">
           <div className="glass-card p-6 md:p-8 rounded-2xl border border-borderGray glow-green max-w-lg w-full space-y-6">
