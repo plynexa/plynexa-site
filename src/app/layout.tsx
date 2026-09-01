@@ -2,8 +2,12 @@ import React from 'react';
 import './globals.css';
 
 export const metadata = {
-  title: 'Plynexa - Inteligência Artificial, Sites Profissionais e Automação',
-  description: 'Tecnologia conectada para negócios. Escale suas vendas e atendimento com agentes de IA 24/7 de alta conversão.',
+  title: 'Plynexa — Agentes de IA e automação para empresas',
+  description: 'Sites profissionais, agentes de IA e automação de processos para escalar atendimento, vendas e operações.',
+  icons: {
+    icon: '/plynexa-logo.png',
+    apple: '/plynexa-logo.png',
+  },
 };
 
 export default function RootLayout({
@@ -14,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" />
       </head>
       <body className="antialiased">{children}</body>
     </html>

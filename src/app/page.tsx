@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React,{useState} from 'react';
 import Navbar from '../components/Navbar';
 import ChatDemo from '../components/ChatDemo';
 import Metrics from '../components/Metrics';
@@ -7,322 +7,65 @@ import ROICalculator from '../components/ROICalculator';
 import FAQ from '../components/FAQ';
 import LeadForm from '../components/LeadForm';
 import Footer from '../components/Footer';
-import { Cpu, Zap, Star, ShieldCheck, ArrowUpRight, Code, MessageSquare, Terminal } from 'lucide-react';
+import FloatingActions from '../components/FloatingActions';
+import {Bot,Workflow,Compass,LayoutTemplate,LifeBuoy,Check,ArrowRight,ShieldCheck} from 'lucide-react';
+import {solutions,services,industries,portfolio,templates,security} from '../content/plynexa';
 
-export default function Home() {
-  const [activeTab, setActiveTab] = useState<'atendimento' | 'vendas' | 'operacoes' | 'experiencias'>('atendimento');
+function SectionHeading({eyebrow,title,description}:{eyebrow:string,title:string,description:string}){return <div className="text-center max-w-3xl mx-auto"><p className="text-xs font-semibold uppercase tracking-[.2em] text-primaryGreen">{eyebrow}</p><h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl text-balance">{title}</h2><p className="mt-4 text-sm sm:text-base leading-relaxed text-mutedGray">{description}</p></div>}
 
-  const portfolio = [
-    {
-      title: "Clínica de Saúde Inteligente",
-      category: "Atendimento com IA",
-      desc: "Site premium integrado com agente de IA no WhatsApp para agendamento automático e triagem prévia.",
-      impact: "+40% de conversão de consultas"
-    },
-    {
-      title: "Imobiliária Digital Integrada",
-      category: "Automação",
-      desc: "Captura de leads, qualificação instantânea com envio automático de imóveis compatíveis e sincronização com CRM.",
-      impact: "Zero perda de leads na triagem"
-    },
-    {
-      title: "E-Commerce com Assistente de IA",
-      category: "Sites Inteligentes",
-      desc: "Loja virtual moderna acoplada com agente inteligente que recomenda produtos e recupera carrinhos abandonados.",
-      impact: "Recuperação de 28% dos carrinhos"
-    },
-    {
-      title: "Plataforma de Serviços Profissionais",
-      category: "Sistemas Internos",
-      desc: "Automação de ponta a ponta para escritórios, incluindo triagem automática e coleta segura de documentos via webhook.",
-      impact: "Redução de 85% no tempo de triagem"
-    },
-    {
-      title: "SaaS B2B Helpdesk Automatizado",
-      category: "Atendimento com IA",
-      desc: "Central de ajuda autônoma respondendo chamados complexos por e-mail e webchat com IA generativa.",
-      impact: "70% de chamados resolvidos de primeira"
-    },
-    {
-      title: "Dashboard Operacional Plynexa",
-      category: "Dashboards",
-      desc: "Acompanhamento em tempo real das métricas de atendimento, economia gerada e volume de automação de processos.",
-      impact: "Visibilidade absoluta de custos"
-    }
-  ];
+const icons=[Bot,Workflow,Compass,LayoutTemplate,LifeBuoy];
+const SHOW_AI_DEMO = false;
 
-  return (
-    <div className="min-h-screen bg-background relative selection:bg-primaryGreen selection:text-background">
-      {/* Decorative gradient overlay */}
-      <div className="absolute top-0 left-0 right-0 h-[800px] bg-gradient-to-b from-primaryGreen/5 to-transparent pointer-events-none z-0"></div>
-
-      <Navbar />
-
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 px-6 max-w-7xl mx-auto z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primaryGreen/10 border border-primaryGreen/20 text-xs text-primaryGreen font-bold tracking-wider uppercase">
-              <Cpu size={14} className="animate-spin" />
-              Agentes de IA e Automações de Alta Conversão
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
-              Escale sua empresa com <span className="green-gradient">Inteligência Artificial</span> e Automação 24/7
-            </h1>
-            
-            <p className="text-base sm:text-lg text-mutedGray max-w-xl leading-relaxed">
-              Automatize o atendimento no WhatsApp, qualifique leads automaticamente e conecte seus sistemas internos sem precisar expandir sua equipe.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <a 
-                href="#contato" 
-                className="px-8 py-4 rounded-xl bg-primaryGreen text-background font-extrabold text-center hover:shadow-[0_0_20px_rgba(57,255,20,0.4)] transition-all flex items-center justify-center gap-2"
-              >
-                Garantir Meu Diagnóstico
-              </a>
-              <a 
-                href="#solucoes" 
-                className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-extrabold text-center hover:bg-white/10 transition-all flex items-center justify-center gap-1.5"
-              >
-                Conhecer Soluções
-              </a>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-4 border-t border-borderGray text-xs text-mutedGray">
-              <span className="flex items-center gap-1.5 text-white">✓ Sem fidelidade obrigatória</span>
-              <span className="flex items-center gap-1.5 text-white">✓ Suporte 100% customizado</span>
-              <span className="flex items-center gap-1.5 text-white">✓ Adequação integral à LGPD</span>
-            </div>
-          </div>
-
-          <div className="relative">
-            {/* Ambient glow */}
-            <div className="absolute -inset-1.5 bg-primaryGreen/20 rounded-2xl blur-2xl z-0"></div>
-            <div className="relative z-10">
-              <ChatDemo />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Metrics Section */}
-      <section className="py-12 bg-cardBg/30 border-y border-borderGray">
-        <div className="max-w-7xl mx-auto px-6">
-          <Metrics />
-        </div>
-      </section>
-
-      {/* Solutions Section */}
-      <section id="solucoes" className="py-20 md:py-28 px-6 max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Soluções Completas para sua Empresa</h2>
-          <p className="text-sm sm:text-base text-mutedGray max-w-xl mx-auto">Desenvolvemos arquiteturas personalizadas com foco em resultados reais para cada setor.</p>
-          
-          {/* Tab Selector */}
-          <div className="inline-flex p-1 bg-cardBg border border-borderGray rounded-xl max-w-full overflow-x-auto gap-1">
-            {(['atendimento', 'vendas', 'operacoes', 'experiencias'] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2.5 rounded-lg text-xs md:text-sm font-bold capitalize transition-all whitespace-nowrap ${
-                  activeTab === tab 
-                    ? 'bg-primaryGreen text-background shadow-lg' 
-                    : 'text-mutedGray hover:text-white'
-                }`}
-              >
-                {tab === 'experiencias' ? 'Experiências Digitais' : tab}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Tab Content */}
-        <div className="glass-card p-6 md:p-10 rounded-2xl border border-borderGray glow-green max-w-4xl mx-auto">
-          {activeTab === 'atendimento' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primaryGreen font-bold text-sm">
-                <Cpu size={18} /> Atendimento Automatizado 24/7
-              </div>
-              <h3 className="text-2xl font-bold text-white">Resolução imediata nos canais preferidos dos clientes</h3>
-              <p className="text-sm md:text-base text-mutedGray leading-relaxed">
-                Integramos agentes de inteligência artificial treinados com toda a base de conhecimento do seu negócio para responder dúvidas, triar leads, consultar andamento de pedidos e realizar suporte nível 1 de forma instantânea e humanizada, encaminhando o cliente para o atendente correto apenas quando estritamente necessário.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-borderGray/50 text-xs md:text-sm">
-                <span className="text-white">● Respostas automáticas em &lt; 3 seg</span>
-                <span className="text-white">● Integração oficial de WhatsApp API</span>
-                <span className="text-white">● Suporte omnicanal unificado</span>
-                <span className="text-white">● Redução drástica de abandono</span>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'vendas' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primaryGreen font-bold text-sm">
-                <Zap size={18} /> Qualificação e Conversão de Leads
-              </div>
-              <h3 className="text-2xl font-bold text-white">Não perca vendas por demora no tempo de resposta</h3>
-              <p className="text-sm md:text-base text-mutedGray leading-relaxed">
-                Nossos agentes comerciais virtuais iniciam e dão andamento na conversa com leads de campanhas a qualquer hora do dia ou da noite. Eles realizam a qualificação de forma automática seguindo o perfil de cliente ideal da empresa, e efetuam o agendamento de reuniões comerciais diretamente na agenda do seu time comercial.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-borderGray/50 text-xs md:text-sm">
-                <span className="text-white">● Abordagem ativa em novos leads</span>
-                <span className="text-white">● Agendamento automático no Calendly</span>
-                <span className="text-white">● Integração em tempo real com CRM</span>
-                <span className="text-white">● Recuperação ativa de carrinhos</span>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'operacoes' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primaryGreen font-bold text-sm">
-                <Terminal size={18} /> Automação Interna de Processos
-              </div>
-              <h3 className="text-2xl font-bold text-white">Elimine o trabalho repetitivo e libere seu time</h3>
-              <p className="text-sm md:text-base text-mutedGray leading-relaxed">
-                Desenvolvemos fluxos de automação de dados integrando seus CRMs (HubSpot, Pipedrive, RD Station), ERPs e ferramentas de planilhas. Desde a triagem automatizada e validação de documentos recebidos até a geração automática de relatórios operacionais completos com resumos inteligentes.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-borderGray/50 text-xs md:text-sm">
-                <span className="text-white">● Sincronização automática entre plataformas</span>
-                <span className="text-white">● Validação e leitura de documentos por IA</span>
-                <span className="text-white">● Notificações e fluxos em tempo real</span>
-                <span className="text-white">● Zero erros de preenchimento manual</span>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'experiencias' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primaryGreen font-bold text-sm">
-                <Code size={18} /> Desenvolvimento de Sites Inteligentes
-              </div>
-              <h3 className="text-2xl font-bold text-white">Sua vitrine digital otimizada para alta conversão</h3>
-              <p className="text-sm md:text-base text-mutedGray leading-relaxed">
-                Criamos landing pages, sites institucionais modernos e portais corporativos responsivos com foco total em conversão e velocidade de carregamento (SEO acima de 90). Todos os sites já contam com recursos integrados de captação de leads e inteligência artificial nativa incorporada para maximizar resultados.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-borderGray/50 text-xs md:text-sm">
-                <span className="text-white">● Velocidade otimizada para dispositivos móveis</span>
-                <span className="text-white">● Código limpo otimizado para SEO local</span>
-                <span className="text-white">● Elementos visuais interativos</span>
-                <span className="text-white">● Suporte técnico e evolução contínua</span>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Services Cards */}
-      <section id="servicos" className="py-20 bg-cardBg/20 border-y border-borderGray px-6">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Nossas Linhas de Atuação</h2>
-            <p className="text-sm text-mutedGray max-w-xl mx-auto">Escolha o nível de implementação ideal para o atual momento de crescimento do seu negócio.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="glass-card p-8 rounded-2xl border border-borderGray flex flex-col justify-between hover:border-primaryGreen/40 transition-colors">
-              <div className="space-y-5">
-                <div className="text-xs font-bold text-primaryGreen uppercase tracking-widest">Nível 01</div>
-                <h3 className="text-2xl font-bold text-white">Site Essencial</h3>
-                <p className="text-sm text-mutedGray leading-relaxed">Website institucional profissional, com carregamento ultrarrápido, design moderno sob medida e otimização de SEO para buscadores.</p>
-                <ul className="space-y-2.5 text-xs text-mutedGray border-t border-borderGray/50 pt-5">
-                  <li className="flex items-center gap-2 text-white">✓ Landing page responsiva de alta performance</li>
-                  <li className="flex items-center gap-2 text-white">✓ Otimização de SEO (Lighthouse &gt; 90)</li>
-                  <li className="flex items-center gap-2 text-white">✓ Formuários integrados para recebimento de leads</li>
-                </ul>
-              </div>
-              <a href="#contato" className="mt-8 w-full py-3 text-center rounded-xl border border-primaryGreen/30 text-primaryGreen font-bold text-xs hover:bg-primaryGreen hover:text-background transition-all">Solicitar Orçamento</a>
-            </div>
-
-            {/* Card 2 */}
-            <div className="glass-card p-8 rounded-2xl border-2 border-primaryGreen glow-green flex flex-col justify-between relative">
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primaryGreen text-background text-[10px] font-extrabold uppercase tracking-wider">Mais Procurado</span>
-              <div className="space-y-5">
-                <div className="text-xs font-bold text-primaryGreen uppercase tracking-widest">Nível 02</div>
-                <h3 className="text-2xl font-bold text-white">Site de Conversão</h3>
-                <p className="text-sm text-mutedGray leading-relaxed">Experiência inteligente completa com landing pages avançadas integradas com CRM e fluxos automáticos de acompanhamento comercial.</p>
-                <ul className="space-y-2.5 text-xs text-mutedGray border-t border-borderGray/50 pt-5">
-                  <li className="flex items-center gap-2 text-white">✓ Landing page + Automação de CRM (API)</li>
-                  <li className="flex items-center gap-2 text-white">✓ Dashboard básico de acompanhamento</li>
-                  <li className="flex items-center gap-2 text-white">✓ Rastreamento de conversão pixel/analytics</li>
-                </ul>
-              </div>
-              <a href="#contato" className="mt-8 w-full py-3 text-center rounded-xl bg-primaryGreen text-background font-extrabold text-xs hover:opacity-90 transition-opacity">Contratar Solução</a>
-            </div>
-
-            {/* Card 3 */}
-            <div className="glass-card p-8 rounded-2xl border border-borderGray flex flex-col justify-between hover:border-primaryGreen/40 transition-colors">
-              <div className="space-y-5">
-                <div className="text-xs font-bold text-primaryGreen uppercase tracking-widest">Nível 03</div>
-                <h3 className="text-2xl font-bold text-white">Experiência Inteligente</h3>
-                <p className="text-sm text-mutedGray leading-relaxed">Automação máxima com agente inteligente de IA integrado ao WhatsApp, site e CRM para triagem de leads, vendas e agendamento automático.</p>
-                <ul className="space-y-2.5 text-xs text-mutedGray border-t border-borderGray/50 pt-5">
-                  <li className="flex items-center gap-2 text-white">✓ Agente de IA customizado (WhatsApp e Webchat)</li>
-                  <li className="flex items-center gap-2 text-white">✓ Integrações customizadas via Webhooks e APIs</li>
-                  <li className="flex items-center gap-2 text-white">✓ Treinamento com base de conhecimento</li>
-                </ul>
-              </div>
-              <a href="#contato" className="mt-8 w-full py-3 text-center rounded-xl border border-primaryGreen/30 text-primaryGreen font-bold text-xs hover:bg-primaryGreen hover:text-background transition-all">Solicitar Escopo de IA</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Portfólio Section */}
-      <section id="portfolio" className="py-20 md:py-28 px-6 max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Portfólio de Soluções Plynexa</h2>
-          <p className="text-sm sm:text-base text-mutedGray max-w-xl mx-auto">Demonstrações de aplicações de mercado estruturadas com IA prontas para adaptação.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolio.map((item, idx) => (
-            <div key={idx} className="glass-card p-6 rounded-2xl border border-borderGray flex flex-col justify-between hover:border-primaryGreen/30 transition-colors">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-primaryGreen font-bold uppercase tracking-wider bg-primaryGreen/10 border border-primaryGreen/20 px-2 py-0.5 rounded-md">Demonstrativo</span>
-                  <span className="text-[10px] text-mutedGray">{item.category}</span>
-                </div>
-                <h4 className="text-lg font-bold text-white">{item.title}</h4>
-                <p className="text-xs text-mutedGray leading-relaxed">{item.desc}</p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-borderGray/50 flex items-center justify-between">
-                <span className="text-[10px] text-white font-medium">Métrica Projetada:</span>
-                <span className="text-[10px] text-primaryGreen font-bold">{item.impact}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ROI Section */}
-      <section id="roi" className="py-20 bg-cardBg/20 border-y border-borderGray px-6">
-        <div className="max-w-7xl mx-auto">
-          <ROICalculator />
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-20 md:py-28 px-6 max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Dúvidas Frequentes</h2>
-          <p className="text-sm text-mutedGray max-w-xl mx-auto">Tudo o que você precisa saber sobre a segurança, implementação e custos da Plynexa.</p>
-        </div>
-        <FAQ />
-      </section>
-
-      {/* Lead / Contact Section */}
-      <section id="contato" className="py-20 bg-cardBg/40 border-t border-borderGray px-6">
-        <div className="max-w-7xl mx-auto">
-          <LeadForm />
-        </div>
-      </section>
-
-      <Footer />
+export default function Home(){
+ const [active,setActive]=useState('atendimento');
+ const [industry,setIndustry]=useState(0);
+ const current=solutions.find(s=>s.id===active)!;
+ return <div id="topo" className="min-h-screen bg-background relative overflow-hidden">
+  <div className="pointer-events-none absolute inset-x-0 top-0 h-[850px] radial-brand"/>
+  <div className="pointer-events-none absolute inset-0 hex-grid opacity-30"/>
+  <Navbar/>
+  <main className="relative z-10">
+   <section className="relative pb-20 pt-36 sm:pb-28 sm:pt-44">
+    <div className={`mx-auto grid items-center gap-12 px-4 sm:px-6 lg:px-8 ${SHOW_AI_DEMO ? 'max-w-7xl lg:grid-cols-2' : 'max-w-5xl'}`}>
+     <div className={SHOW_AI_DEMO ? '' : 'text-center'}>
+      <p className="inline-flex items-center gap-2 rounded-full border border-borderGray bg-cardBg/60 px-3 py-1.5 text-xs text-mutedGray"><span className="size-1.5 rounded-full bg-primaryGreen"/><span>Agentes de IA de próxima geração para atendimento e vendas</span></p>
+      <h1 className="mt-6 font-display text-4xl leading-[1.05] font-bold sm:text-5xl lg:text-6xl">Escale seu atendimento <span className="text-gradient-brand">24/7</span> com agentes de IA autônomos</h1>
+      <p className={`mt-5 max-w-2xl text-base leading-relaxed text-mutedGray sm:text-lg ${SHOW_AI_DEMO ? '' : 'mx-auto'}`}>Automatize conversas, qualifique leads automaticamente e conecte seus sistemas internos sem precisar expandir sua equipe.</p>
+      <div className={`mt-8 flex flex-col gap-3 sm:flex-row ${SHOW_AI_DEMO ? '' : 'justify-center'}`}><a href="#contato" className="rounded-xl bg-primaryGreen px-6 py-3.5 text-center text-sm font-extrabold text-background hover:opacity-90">Agendar diagnóstico gratuito</a><a href="#servicos" className="rounded-xl border border-borderGray bg-white/5 px-6 py-3.5 text-center text-sm font-extrabold text-white hover:bg-white/10">Conhecer os serviços</a></div>
+      <ul className={`mt-6 flex flex-wrap gap-x-5 gap-y-2 ${SHOW_AI_DEMO ? '' : 'justify-center'}`}>{['Diagnóstico sem compromisso','Implementação personalizada','Atendimento remoto','Conformidade com a LGPD'].map(x=><li key={x} className="flex items-center gap-1.5 text-xs text-mutedGray"><Check className="size-3.5 text-primaryGreen"/>{x}</li>)}</ul>
+     </div>
+     {SHOW_AI_DEMO && <div className="lg:pl-6"><ChatDemo/></div>}
     </div>
-  );
+   </section>
+
+   <section className="border-y border-borderGray bg-cardBg/25 py-14"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><p className="text-center text-xs font-semibold uppercase tracking-[.2em] text-primaryGreen">Resultados estimados</p><h2 className="mt-3 text-center font-display text-2xl font-bold sm:text-3xl">Potencial de impacto na sua operação</h2><p className="mx-auto mt-3 max-w-2xl text-center text-sm text-mutedGray">As estimativas abaixo são referências iniciais. Os resultados variam conforme o volume, os processos, as integrações e o cenário de cada empresa.</p><div className="mt-8"><Metrics/></div></div></section>
+
+   <section id="solucoes" className="scroll-mt-20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Soluções por objetivo" title="Comece pelo problema que você quer resolver" description="Selecione o objetivo da sua operação e veja a abordagem, os canais compatíveis e o benefício comercial."/>
+    <div className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-2">{solutions.map(s=><button key={s.id} onClick={()=>setActive(s.id)} className={`rounded-xl border px-4 py-2 text-sm font-medium transition-all ${active===s.id?'border-primaryGreen/50 bg-primaryGreen/15 text-white':'border-borderGray text-mutedGray hover:text-white'}`}>{s.label}</button>)}</div>
+    <div className="glass-card glow-brand mt-8 grid gap-8 rounded-2xl p-6 sm:p-8 lg:grid-cols-[1.1fr_1fr]"><div><h3 className="font-display text-2xl font-bold">{current.headline}</h3><dl className="mt-6 space-y-4 text-sm"><div><dt className="font-semibold text-primaryGreen">Problema</dt><dd className="mt-1 text-mutedGray">{current.problem}</dd></div><div><dt className="font-semibold text-primaryGreen">Abordagem</dt><dd className="mt-1 text-mutedGray">{current.approach}</dd></div><div><dt className="font-semibold text-primaryGreen">Benefício comercial</dt><dd className="mt-1 text-mutedGray">{current.benefit}</dd></div></dl><ul className="mt-6 flex flex-wrap gap-2">{current.channels.map(c=><li key={c} className="rounded-full border border-borderGray px-3 py-1 text-xs text-mutedGray">{c}</li>)}</ul></div><ul className="space-y-3 rounded-2xl border border-borderGray bg-background/40 p-5">{current.items.map(i=><li key={i} className="flex items-start gap-2.5 text-sm"><Check className="mt-0.5 size-4 shrink-0 text-primaryGreen"/><span>{i}</span></li>)}</ul></div>
+   </div></section>
+
+   <section id="servicos" className="scroll-mt-20 border-y border-borderGray bg-cardBg/20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Serviços" title="Da estratégia à operação rodando" description="Consultoria, agentes de IA, automações e desenvolvimento — implantados de forma integrada aos seus processos."/><div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{services.map((s,i)=>{const I=icons[i];return <article key={s.title} className="glass-card flex h-full flex-col rounded-2xl p-6 hover:border-primaryGreen/30"><span className="flex size-11 items-center justify-center rounded-xl border border-primaryGreen/25 bg-primaryGreen/10"><I className="size-5 text-primaryGreen"/></span><h3 className="mt-4 font-display text-lg font-bold">{s.title}</h3><p className="mt-2 text-sm leading-relaxed text-mutedGray">{s.summary}</p><ul className="mt-4 space-y-1.5 text-sm text-mutedGray">{s.benefits.map(b=><li key={b} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-primaryGreen"/>{b}</li>)}</ul><ul className="mt-4 flex flex-wrap gap-1.5">{s.tech.map(t=><li key={t} className="rounded-md border border-borderGray px-2 py-0.5 text-[11px] text-mutedGray">{t}</li>)}</ul></article>})}</div></div></section>
+
+   <section className="py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Soluções que crescem com sua empresa" title="Escolha o nível de implementação ideal para o seu momento" description="Os níveis abaixo são referências de escopo. A solução final é definida conforme seus objetivos, canais e integrações."/><div className="mt-12 grid gap-6 md:grid-cols-3">{[['Site Essencial','Website institucional profissional, responsivo, com design sob medida e SEO técnico.',['Landing page responsiva','SEO técnico','Formulários para leads']],['Site de Conversão','Landing pages avançadas integradas a CRM, analytics e fluxos de acompanhamento comercial.',['Landing page + CRM','Dashboard de acompanhamento','Rastreamento de conversão']],['Experiência Inteligente','Agente de IA integrado ao WhatsApp, site e CRM para triagem, vendas e agendamento.',['Agente de IA customizado','Webhooks e APIs','Base de conhecimento']]].map(([name,desc,items],i)=><article key={name as string} className={`glass-card relative flex flex-col rounded-2xl p-7 ${i===1?'border-2 border-primaryGreen/60 glow-brand':''}`}>{i===1&&<span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primaryGreen px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-background">Mais procurado</span>}<p className="text-xs font-bold uppercase tracking-widest text-primaryGreen">Nível 0{i+1}</p><h3 className="mt-3 font-display text-2xl font-bold">{name as string}</h3><p className="mt-3 text-sm leading-relaxed text-mutedGray">{desc as string}</p><ul className="mt-5 space-y-2 border-t border-borderGray pt-5 text-sm">{(items as string[]).map(x=><li key={x} className="flex gap-2"><Check className="size-4 text-primaryGreen"/>{x}</li>)}</ul><a href="#contato" className="mt-7 inline-flex items-center justify-center rounded-xl border border-primaryGreen/30 px-4 py-2.5 text-sm font-bold text-primaryGreen hover:bg-primaryGreen/10">Conversar sobre este nível <ArrowRight className="ml-1.5 size-4"/></a></article>)}</div></div></section>
+
+   <section id="segmentos" className="scroll-mt-20 border-y border-borderGray bg-cardBg/20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Casos de uso por segmento" title="Automações que fazem sentido para o seu setor" description="Escolha um segmento para visualizar problemas comuns, automações recomendadas e canais."/><div className="mt-10 grid gap-5 lg:grid-cols-[240px_1fr]"><div className="flex gap-2 overflow-x-auto lg:flex-col">{industries.map((x,i)=><button key={x[0]} onClick={()=>setIndustry(i)} className={`shrink-0 rounded-xl border px-4 py-2.5 text-left text-sm ${i===industry?'border-primaryGreen/50 bg-primaryGreen/15 text-white':'border-borderGray text-mutedGray hover:text-white'}`}>{x[0]}</button>)}</div><div className="glass-card rounded-2xl p-6 sm:p-8"><h3 className="font-display text-2xl font-bold">{industries[industry][0]}</h3><div className="mt-6 grid gap-6 sm:grid-cols-3"><div><h4 className="text-sm font-semibold text-primaryGreen">Principais problemas</h4><p className="mt-2 text-sm leading-relaxed text-mutedGray">{industries[industry][1]}</p></div><div><h4 className="text-sm font-semibold text-primaryGreen">Automações recomendadas</h4><p className="mt-2 text-sm leading-relaxed text-mutedGray">{industries[industry][2]}</p></div><div><h4 className="text-sm font-semibold text-primaryGreen">Canais</h4><p className="mt-2 text-sm leading-relaxed text-mutedGray">{industries[industry][3]}</p></div></div></div></div></div></section>
+
+   <section id="processo" className="scroll-mt-20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Como funciona" title="Um processo em quatro etapas" description="Prazos são estimativas e são confirmados no diagnóstico, conforme canais, integrações e volume de conteúdo."/><ol className="mt-12 grid gap-5 lg:grid-cols-4">{[['01','Diagnóstico e mapeamento','Análise dos canais, equipe, processos, volume e indicadores.',['Mapa de processos','Lista de gargalos','Oportunidades priorizadas']],['02','Estratégia e treinamento','Definição dos fluxos, base de conhecimento, personalidade e regras da IA.',['Fluxos aprovados','Base de conhecimento','Regras e limites']],['03','Integração e validação','Integração com canais e sistemas, testes controlados e validação.',['Integrações ativas','Roteiro de testes','Ajustes pós-validação']],['04','Lançamento e otimização','Entrada em produção, acompanhamento e melhoria contínua.',['Go-live acompanhado','Painel de indicadores','Ciclo de melhorias']]].map(([n,t,d,items])=><li key={n as string} className="glass-card rounded-2xl p-6"><span className="font-display text-3xl font-bold text-gradient-brand">{n as string}</span><h3 className="mt-3 font-display text-lg font-bold">{t as string}</h3><p className="mt-2 text-sm leading-relaxed text-mutedGray">{d as string}</p><ul className="mt-4 space-y-1.5 text-sm text-mutedGray">{(items as string[]).map(x=><li key={x}>• {x}</li>)}</ul></li>)}</ol></div></section>
+
+   <section id="portfolio" className="scroll-mt-20 border-y border-borderGray bg-cardBg/20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Portfólio" title="Projetos, demonstrações e soluções-base" description="Cenários construídos para mostrar como as automações funcionam na prática. Todos são identificados como demonstrativos."/><div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{portfolio.map(p=><article key={p[0]} className="glass-card flex h-full flex-col rounded-2xl p-6"><div className="flex items-center justify-between"><span className="rounded-md border border-primaryGreen/20 bg-primaryGreen/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-primaryGreen">Projeto demonstrativo</span><span className="text-[10px] text-mutedGray">{p[1]}</span></div><h3 className="mt-5 font-display text-lg font-bold">{p[0]}</h3><p className="mt-2 text-sm text-mutedGray">{p[2]}</p><p className="mt-4 border-t border-borderGray pt-4 text-xs leading-relaxed text-mutedGray">{p[3]}</p><p className="mt-auto pt-5 text-xs text-primaryGreen">{p[4]}</p></article>)}</div></div></section>
+
+   <section id="modelos" className="scroll-mt-20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Modelos prontos para personalizar" title="Pontos de partida para diferentes tipos de negócio" description="Escolha uma estrutura-base e adaptamos identidade visual, conteúdo, seções e integrações ao seu cenário."/><div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{templates.map(t=><article key={t[0]} className="glass-card rounded-2xl p-5"><p className="text-xs text-primaryGreen">{t[1]}</p><h3 className="mt-2 font-display text-lg font-bold">{t[0]}</h3><p className="mt-2 text-sm leading-relaxed text-mutedGray">{t[2]}</p><p className="mt-4 text-xs text-mutedGray"><strong className="text-white">Seções:</strong> {t[3]}</p><p className="mt-2 text-xs text-mutedGray"><strong className="text-white">Integrações:</strong> {t[4]}</p><p className="mt-2 text-xs text-mutedGray"><strong className="text-white">Prazo:</strong> {t[5]}</p><a href="#contato" className="mt-5 inline-flex text-sm font-semibold text-primaryGreen">Solicitar personalização <ArrowRight className="ml-1 size-4"/></a></article>)}</div></div></section>
+
+   <section id="roi" className="scroll-mt-20 border-y border-borderGray bg-cardBg/20 py-20"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Resultados estimados" title="Calculadora de impacto da automação" description="Ajuste os dados da sua operação e veja uma simulação inicial de economia, ganho de receita e payback. Os valores não representam garantia de resultado."/><div className="mt-10"><ROICalculator/></div></div></section>
+
+   <section id="seguranca" className="scroll-mt-20 py-20 sm:py-24"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Segurança e governança" title="Automação com controle, rastreabilidade e LGPD" description="Cada projeto define bases legais, limites de atuação da IA e registros de auditoria antes de entrar em produção."/><div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{security.map(x=><div key={x[0]} className="glass-card rounded-2xl p-5"><ShieldCheck className="size-5 text-primaryGreen"/><h3 className="mt-3 font-display text-base font-semibold">{x[0]}</h3><p className="mt-1.5 text-sm leading-relaxed text-mutedGray">{x[1]}</p></div>)}</div></div></section>
+
+   <section id="faq" className="scroll-mt-20 border-y border-borderGray bg-cardBg/20 py-20 sm:py-24"><div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8"><SectionHeading eyebrow="Perguntas frequentes" title="Dúvidas comuns sobre IA, automação e sites" description="Se a sua dúvida não estiver aqui, fale com o time pelo formulário de contato."/><div className="mt-10"><FAQ/></div></div></section>
+
+   <section id="contato" className="scroll-mt-20 py-20 sm:py-24"><div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-primaryGreen">Vamos conversar</p><h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">Peça um diagnóstico gratuito da sua operação</h2><p className="mt-4 max-w-md text-base leading-relaxed text-mutedGray">Em uma conversa de 30 minutos mapeamos onde a automação e a IA podem gerar retorno mais rápido no seu negócio.</p><ul className="mt-7 space-y-3 text-sm text-mutedGray">{['Diagnóstico dos canais e processos atuais','Mapa de oportunidades priorizadas','Escopo, cronograma e investimento estimado','Sem compromisso de contratação'].map(x=><li key={x} className="flex gap-2.5"><Check className="size-4 text-primaryGreen"/>{x}</li>)}</ul></div><LeadForm/></div></section>
+  </main>
+  <FloatingActions/>
+  <Footer/>
+ </div>
 }

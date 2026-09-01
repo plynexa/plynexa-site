@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Send, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Send, CheckCircle, AlertTriangle, MessageCircle } from 'lucide-react';
 
 export default function LeadForm() {
   const [formData, setFormData] = useState({
@@ -11,7 +11,20 @@ export default function LeadForm() {
     servico: 'Experiência Inteligente',
     mensagem: ''
   });
+  const [submittedLead, setSubmittedLead] = useState<typeof formData | null>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const whatsappMessage = submittedLead
+    ? [
+        `Olá! Sou ${submittedLead.nome}, da empresa ${submittedLead.empresa}.`,
+        `Acabei de preencher o formulário no site da Plynexa e gostaria de saber mais sobre ${submittedLead.servico}.`,
+        submittedLead.mensagem ? `Mensagem: ${submittedLead.mensagem}` : '',
+      ]
+        .filter(Boolean)
+        .join('\n\n')
+    : 'Olá! Acabei de preencher o formulário no site da Plynexa e gostaria de continuar o atendimento.';
+
+  const whatsappUrl = `https://wa.me/5522998741943?text=${encodeURIComponent(whatsappMessage)}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +60,7 @@ export default function LeadForm() {
       });
 
       if (response.ok) {
+        setSubmittedLead(formData);
         setStatus('success');
         setFormData({ 
           nome: '', 
@@ -76,14 +90,26 @@ export default function LeadForm() {
           </div>
           <h3 className="text-2xl font-bold text-white">Solicitação Recebida!</h3>
           <p className="text-sm text-mutedGray max-w-sm mx-auto">
-            Nossos engenheiros de IA e soluções comerciais já estão analisando os canais do seu negócio. Entraremos em contato no WhatsApp em breve!
+            Recebemos seus dados. Nossa equipe analisará seu cenário e entrará em contato pelo WhatsApp em breve.
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-extrabold text-[#04130a] transition-transform hover:-translate-y-0.5"
+          >
+            <MessageCircle size={18} />
+            Continuar atendimento pelo WhatsApp
+          </a>
+          <p className="text-[11px] text-mutedGray/80">
+            Seu cadastro já está salvo. No WhatsApp, basta confirmar o envio da mensagem.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <h4 className="text-xl font-extrabold text-white mb-1">Agendar Diagnóstico de IA Gratuito</h4>
-            <p className="text-xs text-mutedGray">Identifique os gargalos de atendimento do seu negócio in 15 minutos.</p>
+            <h4 className="text-xl font-extrabold text-white mb-1">Agendar diagnóstico gratuito</h4>
+            <p className="text-xs text-mutedGray">Em uma conversa de aproximadamente 30 minutos, mapeamos oportunidades para sites, IA e automações.</p>
           </div>
 
           {status === 'error' && (

@@ -1,50 +1,104 @@
 import React from 'react';
+import {
+  Facebook,
+  Github,
+  Globe2,
+  Instagram,
+  Mail,
+  MessageCircle,
+} from 'lucide-react';
 import Logo from './Logo';
-import { Mail, MessageSquare } from 'lucide-react';
+
+const whatsappMessage =
+  'Olá! Gostaria de saber mais sobre criação de sites, automações e os serviços da Plynexa.';
+const whatsappUrl = `https://wa.me/5522998741943?text=${encodeURIComponent(whatsappMessage)}`;
+
+const socialLinks = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/plynexa?igsi=MWdqZ204bGw5NzlwMQ%3D%3D&utm_source=qr',
+    Icon: Instagram,
+  },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/share/1EX5FFTyJS/?mibextid=wwXIfr',
+    Icon: Facebook,
+  },
+  { label: 'GitHub', href: 'https://github.com/plynexa', Icon: Github },
+];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-borderGray bg-background/50 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-        <div className="space-y-4 md:col-span-2">
+    <footer className="border-t border-borderGray bg-cardBg/40">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4 lg:px-8">
+        <div className="md:col-span-2">
           <Logo />
-          <p className="text-xs md:text-sm text-mutedGray max-w-sm leading-relaxed">
-            Tecnologia conectada para negócios. Agência especializada em automação comercial, desenvolvimento inteligente e implementação estratégica de agentes de Inteligência Artificial B2B.
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-mutedGray">
+            Tecnologia conectada para negócios. Consultoria, automação de processos,
+            agentes de IA e experiências digitais para empresas que querem escalar
+            atendimento, vendas e operações.
           </p>
+          <p className="mt-4 flex items-center gap-2 text-sm text-mutedGray">
+            <Globe2 className="h-4 w-4 text-primaryGreen" />
+            Atendimento remoto para empresas de todo o Brasil.
+          </p>
+          <div className="mt-5 flex items-center gap-2">
+            {socialLinks.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Acessar ${label} da Plynexa`}
+                title={label}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-borderGray bg-white/5 text-mutedGray transition-colors hover:border-primaryGreen/35 hover:text-primaryGreen"
+              >
+                <Icon className="h-[18px] w-[18px]" />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
-          <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-4">Soluções</h5>
-          <ul className="space-y-2 text-xs md:text-sm text-mutedGray">
-            <li><a href="#solucoes" className="hover:text-primaryGreen transition-colors">Atendimento Inteligente</a></li>
-            <li><a href="#solucoes" className="hover:text-primaryGreen transition-colors">Vendas e Conversão</a></li>
-            <li><a href="#solucoes" className="hover:text-primaryGreen transition-colors">Automação de Processos</a></li>
-            <li><a href="#servicos" className="hover:text-primaryGreen transition-colors">Aplicações com IA</a></li>
+          <h2 className="text-sm font-semibold text-white">Navegação</h2>
+          <ul className="mt-4 space-y-2.5 text-sm text-mutedGray">
+            <li><a href="#servicos" className="hover:text-primaryGreen">Serviços</a></li>
+            <li><a href="#processo" className="hover:text-primaryGreen">Como funciona</a></li>
+            <li><a href="#portfolio" className="hover:text-primaryGreen">Portfólio demonstrativo</a></li>
+            <li><a href="#modelos" className="hover:text-primaryGreen">Modelos de sites</a></li>
+            <li><a href="#roi" className="hover:text-primaryGreen">Resultados estimados</a></li>
           </ul>
         </div>
 
         <div>
-          <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-4">Contato Comercial</h5>
-          <ul className="space-y-3 text-xs md:text-sm text-mutedGray">
-            <li className="flex items-center gap-2 text-white">
-              <Mail size={16} className="text-primaryGreen" />
-              <a href="mailto:Plynexa@gmail.com" className="hover:text-primaryGreen transition-all">Plynexa@gmail.com</a>
+          <h2 className="text-sm font-semibold text-white">Contato comercial</h2>
+          <ul className="mt-4 space-y-3 text-sm text-mutedGray">
+            <li className="flex gap-2">
+              <Mail className="h-4 w-4 shrink-0 text-primaryGreen" />
+              <a href="mailto:plynexa@gmail.com" className="hover:text-primaryGreen">
+                plynexa@gmail.com
+              </a>
             </li>
-            <li className="flex items-center gap-2 text-white">
-              <MessageSquare size={16} className="text-primaryGreen" />
-              <a href="https://wa.me/5522998741943" target="_blank" rel="noopener noreferrer" className="hover:text-primaryGreen transition-all">+55 (22) 99874-1943</a>
+            <li className="flex gap-2">
+              <MessageCircle className="h-4 w-4 shrink-0 text-primaryGreen" />
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primaryGreen"
+              >
+                +55 (22) 99874-1943
+              </a>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-6 border-t border-borderGray flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-[10px] md:text-xs text-mutedGray text-center">
-          &copy; {new Date().getFullYear()} Plynexa. Todos os direitos reservados.
-        </p>
-        <p className="text-[10px] md:text-xs text-mutedGray text-center">
-          CNPJ: 50.123.456/0001-89 | Desenvolvido com inovação e precisão.
-        </p>
+      <div className="border-t border-borderGray">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-center text-xs text-mutedGray sm:flex-row sm:justify-between sm:px-6 lg:px-8">
+          <p>© {new Date().getFullYear()} Plynexa. Todos os direitos reservados.</p>
+          <p>Desenvolvido com inovação, clareza e precisão.</p>
+        </div>
       </div>
     </footer>
   );

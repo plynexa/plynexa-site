@@ -1,0 +1,21 @@
+# dependencies
+/node_modules
+
+# Next.js build output
+/.next
+/out
+
+# local environment files
+.env*
+!.env.example
+
+# Vercel local metadata
+.vercel
+
+# TypeScript cache
+*.tsbuildinfo
+
+# operating system and editor files
+.DS_Store
+*.swp
+*.swo
